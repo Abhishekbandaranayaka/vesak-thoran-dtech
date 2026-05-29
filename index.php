@@ -1,51 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>ඩිජිටල් තොරණ | බැති ගී සරණිය</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
   <style type="text/css">
 * {margin: 0px; padding: 0px;}
-html, body {
-  height: 100%;
-  overflow-x: hidden;
-}
+html, body {height: 100%;}
+
 
 body{
   background-color: #000000;
-}
-
-.content {
-  position: fixed;
-  width: 1040px;
-  height: 720px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  transform-origin: center center;
-  z-index: 5;
-}
-
-.circle-container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.middle-circle,
-.outer-circle {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0;
-  height: 0;
 }
 
  .led {
@@ -109,22 +74,18 @@ body{
 .img-0 {
   width: 250px;
   height: 250px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -125px;
-  margin-top: -125px;
+  position: fixed;
+  top: calc(50% - 125px);
+  left: calc(50% - 125px);
   z-index: 999;
 }
 
 .bg {
-  position: absolute;
+  position: fixed;
   z-index: -1;
-  top: calc(50% - 340px);
-  left: 0;
+  top: calc(50vh - 340px);
+  left: calc(50vw - 524px);
   width: 1040px;
-  max-width: none;
-  height: auto;
   transform: rotate(0deg);
 }
 
@@ -205,9 +166,22 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
   border: 2px solid #F0F0FF;
 }
 
-@media only screen and (max-width: 1040px), only screen and (max-height: 740px) {
-  .content {
-    transform: translate(-50%, -50%) scale(min(calc(100vw / 1040), calc((100vh - 16px) / 720)));
+.small-screen-msg {
+  display: none;
+}
+
+.small-screen-msg  h2{
+  text-align: center;
+  color: #ffffff;
+}
+
+@media only screen and (max-width: 1024px) {
+  .page {
+    display: none;
+  }
+
+  .small-screen-msg {
+    display: block;
   }
 }
 
@@ -253,10 +227,8 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
   transform: translateX(100%);
 }
 
-.curtain-panel img {
-  max-width: 100%;
-  height: 100%;
-  object-fit: cover;
+.content {
+  z-index: 5;
 }
 
 .curtain-panel {
@@ -276,33 +248,19 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
 
 }
 .modal-circle {
-  position: absolute;
-  left: 50%;
+  position: fixed;
+  left: 330px;
   top: 50%;
-  margin-left: -20px;
-  margin-top: -20px;
 }
 
-.modal .modal-visual {
-  position: relative;
-  min-height: 280px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .modal .frame-img{
   width: 460px;
   height: 460px;
-  max-width: 90vw;
-  max-height: 90vw;
   border-radius: 50%;
-  position: relative;
-  left: auto;
-  top: auto;
-  display: block;
-  margin: 0 auto;
-  z-index: 2;
+  position: fixed;
+  left: 100px;
+  top: calc(50% - 230px);
 }
 
 
@@ -310,34 +268,24 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
   color: #FFFFFF;
 }
 
-.modal .modal-text {
-  position: relative;
-  padding: 1rem;
-}
-
 .paper {
-  width: 100%;
-  max-width: 520px;
+  width: 520px;
   height: auto;
-  position: relative;
-  display: block;
+  position: fixed;
 }
 
 #writer {
   max-width: 400px;
-  margin: 1rem auto 0;
-  padding: 0 1rem;
-  position: relative;
-  top: auto;
+  margin-left: 60px;
+  top: 100px;
+  position: fixed;
   color: #814F2C;
-  font-size: 1.1rem;
-  line-height: 1.5;
 }
 
 .bottm_buton_set {
-  position: relative;
-  margin: 1.5rem auto 2rem;
-  text-align: center;
+  position: fixed;
+  bottom: 90px;
+  right: 250px;
 }
 
 .bottm_buton_set .btn{
@@ -354,7 +302,7 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
       width: 150px;
       height: 150px;
       background-color: #FF0000;
-      position: absolute;
+      position: fixed;
       z-index: 999;
       top: calc(50% + 160px);
     }
@@ -378,10 +326,10 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
 .bottom-led-pannel{
   width: 1010px;
   height: 190px;
-  position: absolute;
+  position: fixed;
   top: calc(50% + 145px);
   left: calc(50% - 505px);
-  z-index: -1;
+      z-index: -1;
 }
 
 .led-line {
@@ -394,74 +342,12 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
   box-shadow: none !important;
 }
 
-.modal .row.modal-inner {
-  min-height: 100%;
-  margin: 0;
-  align-items: center;
-}
-
-@media only screen and (max-width: 768px) {
-  .modal .row.modal-inner {
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 1rem 0.75rem 2rem;
-    overflow-y: auto;
-    max-height: 100vh;
-  }
-
-  .modal .col-sm-6 {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-
-  .modal .modal-visual {
-    min-height: 200px;
-    transform: scale(0.55);
-    transform-origin: center top;
-    margin-bottom: -4rem;
-  }
-
-  .modal .frame-img {
-    width: min(260px, 72vw);
-    height: min(260px, 72vw);
-  }
-
-  .modal .modal-text {
-    padding: 0 0.5rem;
-  }
-
-  #writer {
-    max-width: 100%;
-    font-size: 0.95rem;
-    margin-top: 0.5rem;
-  }
-
-  .bottm_buton_set {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    padding: 0 0.5rem;
-  }
-
-  .bottm_buton_set .btn {
-    font-size: 0.8rem;
-    padding: 0.35rem 0.5rem;
-    white-space: normal;
-  }
-
-  .curtain-panel img {
-    object-fit: cover;
-    width: 100%;
-  }
-}
-
   </style>
 </head>
 <body>
 <div class="modal">
-<div class="row modal-inner">
-    <div class="col-sm-6 modal-visual">
+<div class="row">
+    <div class="col-sm-6">
     <div class="modal-circle">
 <?php
 for ($i=0; $i < 40; $i++) {
@@ -472,8 +358,8 @@ for ($i=0; $i < 40; $i++) {
 </div>
     <img class="frame-img">
   </div>
-  <div class="col-sm-6 modal-text">
-    <img src="img/paper.png" class="paper" alt="">
+  <div class="col-sm-6">
+    <img src="img/paper.png" class="paper">
     <h1 id="writer"></h1>
     <div class="bottm_buton_set">
       <button class="btn prev_btn">පෙර රූප රාමුව</button>
@@ -800,6 +686,12 @@ for ($i=0; $i < 20; $i++) {
 </div>
 </div>
 
+
+<div class="small-screen-msg">
+  
+  <h2>මෙම වෙබ් පිටුව ජංගම දුරකතන තිරයෙන් නැරබීමට නොහැකිය.</h2>
+</div>
+
 <audio id="audio" src="songs/audio_1.mp3"></audio>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -1050,10 +942,6 @@ $(".modal").click(function () {
 
   $(".modal").fadeOut(1000);
   $(".modal-circle .led").removeClass("on");
-})
-
-$(".modal .modal-inner").click(function (e) {
-  e.stopPropagation();
 })
 
 
