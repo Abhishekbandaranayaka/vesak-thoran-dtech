@@ -1634,15 +1634,26 @@
         }
       }
 
+      @keyframes lotus-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
       .lotus {
         width: 150px;
         height: 150px;
+        display: block;
+        animation: lotus-spin 18s linear infinite;
+      }
+
+      .lotus-animation.right .lotus {
+        animation-direction: reverse;
       }
 
       .lotus-animation {
         width: 150px;
         height: 150px;
-        background-color: #ff0000;
+        background-color: transparent;
         position: fixed;
         z-index: 999;
         top: calc(50% + 160px);
@@ -1775,11 +1786,11 @@
         <img class="img-0" src="img/0.png" />
         <img class="bg" src="img/bg.png" />
 
-        <div class="lotus-animation left" style="display: none">
+        <div class="lotus-animation left">
           <img class="lotus" src="img/lotus.png" />
         </div>
 
-        <div class="lotus-animation right" style="display: none">
+        <div class="lotus-animation right">
           <img class="lotus" src="img/lotus.png" />
         </div>
 
@@ -2722,23 +2733,6 @@
       $(".modal-circle .led").removeClass("on");
     })
 
-
-    async function lotus_animation() {
-      var colors = ["#FF0000", "#00FF00", "#185adb", "#f55c47"];
-
-      for (var i = 0; i < 20; i++) {
-
-        await sleep(200);
-
-        $(".lotus-animation").css("background-color" , colors[i]);
-
-        if (i == 5) {
-          i = 0;
-        }
-      }
-    }
-
-    //lotus_animation();
 
     async function bottom_led_animation() {
 

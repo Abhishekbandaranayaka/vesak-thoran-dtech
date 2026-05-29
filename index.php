@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ඩිජිටල් තොරණ | බැති ගී සරණිය</title>
+  <title>ඩිජිටල් වෙසක් තොරණ - ස්වර්ණ මයුර ජාතකය</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
   <style type="text/css">
@@ -310,6 +310,10 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
   position: fixed;
   bottom: 90px;
   right: 250px;
+  z-index: 10001;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .bottm_buton_set .btn{
@@ -317,15 +321,50 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
     color: #FFFFFF;
 }
 
-   .lotus{
+@media only screen and (max-width: 768px) {
+  .bottm_buton_set {
+    bottom: clamp(16px, 3vh, 40px);
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    justify-content: center;
+    max-width: 95vw;
+  }
+
+  .bottm_buton_set .btn {
+    font-size: clamp(10px, 2.8vw, 13px);
+    padding: 0.35rem 0.55rem;
+    white-space: nowrap;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .bottm_buton_set .btn {
+    font-size: clamp(9px, 2.5vw, 12px);
+    padding: 0.3rem 0.45rem;
+  }
+}
+
+   @keyframes lotus-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .lotus {
       width: 150px;
       height: 150px;
+      display: block;
+      animation: lotus-spin 18s linear infinite;
+    }
+
+    .lotus-animation.right .lotus {
+      animation-direction: reverse;
     }
 
     .lotus-animation {
       width: 150px;
       height: 150px;
-      background-color: #FF0000;
+      background-color: transparent;
       position: fixed;
       z-index: 999;
       top: calc(50% + 160px + var(--ui-offset));
@@ -386,9 +425,9 @@ for ($i=0; $i < 40; $i++) {
     <img src="img/paper.png" class="paper">
     <h1 id="writer"></h1>
     <div class="bottm_buton_set">
-      <button class="btn prev_btn">පෙර රූප රාමුව</button>
-      <button class="btn next_btn">මීළඟ රූප රාමුව</button>
-      <button class="btn credit_btn">ස්තූතිය</button>
+      <button type="button" class="btn prev_btn">පෙර රූප රාමුව</button>
+      <button type="button" class="btn next_btn">මීළඟ රූප රාමුව</button>
+      <button type="button" class="btn credit_btn">ස්තූතිය</button>
     </div>
   </div>
 </div>
@@ -426,12 +465,12 @@ for ($i=1; $i <= 8; $i++) {
 <img class="img-0" src="img/0.png">
 <img class="bg"  src="img/bg.png">
 
-<div class="lotus-animation left" style="display: none;">
-  <img class="lotus"  src="img/lotus.png">
+<div class="lotus-animation left">
+  <img class="lotus" src="img/lotus.png" alt="">
 </div>
 
-<div class="lotus-animation right" style="display: none;">
-  <img class="lotus" src="img/lotus.png">
+<div class="lotus-animation right">
+  <img class="lotus" src="img/lotus.png" alt="">
 </div>
 
 <div class="bottom-led-pannel">
@@ -716,13 +755,20 @@ for ($i=0; $i < 20; $i++) {
   <h2>මෙම වෙබ් පිටුව ජංගම දුරකතන තිරයෙන් නැරබීමට නොහැකිය.</h2>
 </div>
 
-<audio id="audio" src="songs/audio_1.mp3"></audio>
+<audio id="audio" src="songs/audio_1.mp3" autoplay preload="auto" loop></audio>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function playAudio() {
+  var audio = document.getElementById("audio");
+  if (audio) {
+    audio.play().catch(function() {});
+  }
 }
 
 
@@ -890,14 +936,15 @@ outer_led_animation();
 $(document).click(function() {
   $(".curtain-left").addClass("open");
   $(".curtain-right").addClass("open");
-  document.getElementById("audio").play();
+  playAudio();
 })
 
 $(document).ready(function() {
+  playAudio();
+
   setTimeout(function(){ 
     $(".curtain-left").addClass("open");
     $(".curtain-right").addClass("open");
-    document.getElementById("audio").play();
   }, 4000);
 
   setTimeout(function(){ 
@@ -920,7 +967,7 @@ $(".circle-container li img").click(function () {
   }
 
   $(".modal .frame-img").attr("src", "img/" + id + ".jpg");
-  document.getElementById("audio").play();
+  playAudio();
   $(".modal").fadeIn(1000);
   modal_led_animation();
 
@@ -968,23 +1015,6 @@ $(".modal").click(function () {
   $(".modal-circle .led").removeClass("on");
 })
 
-
-async function lotus_animation() {
-  var colors = ["#FF0000", "#00FF00", "#185adb", "#f55c47"];
-
-  for (var i = 0; i < 20; i++) {
-
-    await sleep(200);
-
-    $(".lotus-animation").css("background-color" , colors[i]);
-
-    if (i == 5) {
-      i = 0;
-    }
-  }
-}
-
-//lotus_animation();
 
 async function bottom_led_animation() {
 
