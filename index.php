@@ -9,6 +9,10 @@
 html, body {height: 100%;}
 
 
+:root {
+  --ui-offset: 45px;
+}
+
 body{
   background-color: #000000;
 }
@@ -21,7 +25,7 @@ body{
   position: absolute;
   border-radius: 50%;
   left: 50%;
-  top: 50%;
+  top: calc(50% + var(--ui-offset));
   margin-left: -5px;
   margin-top: -5px;
   z-index: -1;
@@ -66,7 +70,7 @@ body{
  .circle {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: calc(50% + var(--ui-offset));
 
 }
 
@@ -75,7 +79,7 @@ body{
   width: 250px;
   height: 250px;
   position: fixed;
-  top: calc(50% - 125px);
+  top: calc(50% - 125px + var(--ui-offset));
   left: calc(50% - 125px);
   z-index: 999;
 }
@@ -83,7 +87,7 @@ body{
 .bg {
   position: fixed;
   z-index: -1;
-  top: calc(50vh - 340px);
+  top: calc(50vh - 340px + var(--ui-offset));
   left: calc(50vw - 524px);
   width: 1040px;
   transform: rotate(0deg);
@@ -137,7 +141,7 @@ for ($i=1; $i <= 8; $i++) {
 .circle-container > * {
   display: block;
   position: absolute;
-  top: 50%;
+  top: calc(50% + var(--ui-offset));
   left: 50%;
   width: 8em;
   height: 8em;
@@ -169,7 +173,7 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
 .small-screen-msg {
   display: none;
   position: fixed;
-  top: 50%;
+  top: calc(50% + var(--ui-offset));
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
@@ -195,7 +199,7 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
   .bg {
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, calc(-50% + var(--ui-offset)));
     width: min(1040px, 100vw);
     height: auto;
   }
@@ -324,7 +328,7 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
       background-color: #FF0000;
       position: fixed;
       z-index: 999;
-      top: calc(50% + 160px);
+      top: calc(50% + 160px + var(--ui-offset));
     }
 
     .lotus-animation.left {
@@ -347,7 +351,7 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
   width: 1010px;
   height: 190px;
   position: fixed;
-  top: calc(50% + 145px);
+  top: calc(50% + 145px + var(--ui-offset));
   left: calc(50% - 505px);
       z-index: -1;
 }
