@@ -156,6 +156,18 @@
         transform: rotate(0deg);
       }
 
+      @media only screen and (max-width: 768px) {
+        .bg {
+          top: calc(50vh - 400px);
+        }
+      }
+
+      @media only screen and (max-width: 480px) {
+        .bg {
+          top: calc(50vh - 430px);
+        }
+      }
+
       .circle-0-1 .led:nth-child(0) {
         transform: rotate(0deg) translate(40px);
       }
@@ -1455,14 +1467,6 @@
       }
 
       @media only screen and (max-width: 768px) {
-        .bg {
-          top: 50%;
-          left: 50%;
-          width: min(1040px, 100vw);
-          height: auto;
-          transform: translate(-50%, -50%);
-        }
-
         .modal .row {
           flex-direction: column;
           justify-content: flex-start;
