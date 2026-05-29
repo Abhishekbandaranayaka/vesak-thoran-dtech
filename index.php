@@ -6,8 +6,55 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
   <style type="text/css">
 * {margin: 0px; padding: 0px;}
-html, body {height: 100%;}
 
+:root {
+  --ui-scale: 0.88;
+  --story-panel-width: min(480px, 42vw);
+  --story-text-size: clamp(13px, 1.25vw, 20px);
+  --story-btn-size: clamp(11px, 0.95vw, 14px);
+}
+
+@media only screen and (min-width: 1600px) and (max-width: 1919px) {
+  :root {
+    --ui-scale: 1;
+    --story-panel-width: min(520px, 40vw);
+    --story-text-size: clamp(14px, 1.2vw, 22px);
+    --story-btn-size: clamp(12px, 0.9vw, 15px);
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  :root {
+    --ui-scale: 1.18;
+    --story-panel-width: min(660px, 38vw);
+    --story-text-size: clamp(17px, 1.15vw, 28px);
+    --story-btn-size: clamp(14px, 0.9vw, 19px);
+  }
+}
+
+@media only screen and (min-width: 2560px) {
+  :root {
+    --ui-scale: 1.32;
+    --story-panel-width: min(760px, 34vw);
+    --story-text-size: clamp(19px, 1.05vw, 32px);
+    --story-btn-size: clamp(15px, 0.8vw, 22px);
+  }
+}
+
+@media only screen and (max-width: 1366px) {
+  :root {
+    --story-panel-width: min(400px, 48vw);
+    --story-text-size: clamp(12px, 1.4vw, 17px);
+    --story-btn-size: clamp(10px, 1.1vw, 13px);
+  }
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
 
 body{
   background-color: #000000;
@@ -24,7 +71,7 @@ body{
   top: 50%;
   margin-left: -5px;
   margin-top: -5px;
-  z-index: -1;
+  z-index: 1;
 }
 
 
@@ -72,30 +119,34 @@ body{
 
 
 .img-0 {
-  width: 250px;
-  height: 250px;
+  width: 120px;
+  height: auto;
   position: fixed;
-  top: calc(50% - 125px);
-  left: calc(50% - 125px);
+  top: calc(50% + 56px);
+  left: calc(50% + 1.5px);
+  transform: translate(-50%, -50%);
   z-index: 999;
 }
 
 .bg {
   position: fixed;
-  z-index: -1;
-  top: calc(50vh - 340px);
-  left: calc(50vw - 524px);
+  z-index: 0;
+  top: 50%;
+  left: 50%;
   width: 1040px;
-  transform: rotate(0deg);
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 
 
 
 <?php
-for ($i=0; $i <= 20; $i++) { 
+for ($i=1; $i <= 20; $i++) { 
   
-  $deg = $i * (360/20);
+  $deg = ($i - 1) * (360/20);
 
   echo ".circle-0-1 .led:nth-child(".$i.") {transform: rotate(" . $deg . "deg) translate(40px);}\r\n";
   echo ".circle-0-2 .led:nth-child(".$i.") {transform: rotate(" . $deg . "deg) translate(60px);}\r\n";
@@ -116,9 +167,9 @@ for ($i=0; $i <= 20; $i++) {
 
 }
 
-for ($i=0; $i <= 40; $i++) { 
+for ($i=1; $i <= 40; $i++) { 
   
-  $deg = $i * (360/40);
+  $deg = ($i - 1) * (360/40);
 
   echo ".modal-circle .led:nth-child(".$i.") {transform: rotate(" . $deg . "deg) translate(240px);}\r\n";
 
@@ -173,16 +224,7 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
 .small-screen-msg  h2{
   text-align: center;
   color: #ffffff;
-}
-
-@media only screen and (max-width: 1024px) {
-  .page {
-    display: none;
-  }
-
-  .small-screen-msg {
-    display: block;
-  }
+  padding: 2rem;
 }
 
 
@@ -200,7 +242,7 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
 .curtain-panel {
   display: flex;
   align-items: center;
-  background: #5F0A0D;
+  background: #f4f2f1;
   color: #fff;
   float: left;
   position: relative;
@@ -209,6 +251,15 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
   transition: all 4s ease-out;
   z-index: 2;
   margin: 0;
+}
+
+.curtain-panel img {
+  max-width: 72%;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 .curtain-left {
   justify-content: flex-end;
@@ -228,7 +279,79 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
 }
 
 .content {
+  position: fixed;
+  inset: 0;
   z-index: 5;
+  transform: scale(var(--ui-scale));
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+.content > * {
+  pointer-events: auto;
+}
+
+.middle-circle,
+.outer-circle {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.middle-circle .circle-0-1,
+.middle-circle .circle-0-2,
+.middle-circle .circle-0-3,
+.middle-circle .circle-0-4,
+.middle-circle .circle-0-5,
+.middle-circle .circle-0-6,
+.outer-circle .circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.modal .row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  transform: scale(var(--modal-scale, var(--ui-scale)));
+  transform-origin: center center;
+}
+
+@media only screen and (min-width: 1600px) {
+  .modal {
+    --modal-scale: 0.82;
+  }
+}
+
+.modal-frame-panel,
+.modal-story-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2vh 2vw;
+}
+
+.modal-frame-panel {
+  position: relative;
+}
+
+.modal-story-inner {
+  position: relative;
+  width: var(--story-panel-width);
+  max-width: 95%;
+}
+
+.modal-frame-wrap {
+  position: relative;
+  width: 460px;
+  height: 460px;
 }
 
 .curtain-panel {
@@ -248,49 +371,78 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
 
 }
 .modal-circle {
-  position: fixed;
-  left: 330px;
+  position: absolute;
+  left: 50%;
   top: 50%;
 }
 
 
 .modal .frame-img{
-  width: 460px;
-  height: 460px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  position: fixed;
-  left: 100px;
-  top: calc(50% - 230px);
+  position: relative;
+  left: auto;
+  top: auto;
+  object-fit: cover;
+  display: block;
 }
 
-
-#writer {
-  color: #FFFFFF;
+.modal-frame-panel .modal-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .paper {
-  width: 520px;
+  width: 100%;
   height: auto;
-  position: fixed;
+  display: block;
+  position: relative;
 }
 
 #writer {
-  max-width: 400px;
-  margin-left: 60px;
-  top: 100px;
-  position: fixed;
+  position: absolute;
+  top: 12%;
+  bottom: 10%;
+  left: 8%;
+  right: 8%;
+  margin: 0;
+  max-width: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--story-text-size);
+  line-height: 1.45;
   color: #814F2C;
+  font-weight: normal;
 }
 
 .bottm_buton_set {
   position: fixed;
-  bottom: 90px;
-  right: 250px;
+  bottom: clamp(16px, 3vh, 40px);
+  left: 50%;
+  transform: translateX(-50%) scale(var(--modal-scale, 1));
+  transform-origin: center bottom;
+  z-index: 10001;
+  width: auto;
+  max-width: 95vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: auto;
 }
 
 .bottm_buton_set .btn{
     background-color: rgb(123, 77, 43, 0.8);
     color: #FFFFFF;
+    font-size: var(--story-btn-size);
+    padding: 0.35rem 0.65rem;
+    white-space: nowrap;
 }
 
    .lotus{
@@ -328,8 +480,9 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
   height: 190px;
   position: fixed;
   top: calc(50% + 145px);
-  left: calc(50% - 505px);
-      z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 .led-line {
@@ -347,7 +500,8 @@ echo ".circle-container > :nth-of-type(". $i .") {transform: rotate(". $deg . "d
 <body>
 <div class="modal">
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6 modal-frame-panel">
+    <div class="modal-frame-wrap">
     <div class="modal-circle">
 <?php
 for ($i=0; $i < 40; $i++) {
@@ -356,17 +510,20 @@ for ($i=0; $i < 40; $i++) {
 }
 ?>
 </div>
-    <img class="frame-img">
-  </div>
-  <div class="col-sm-6">
-    <img src="img/paper.png" class="paper">
-    <h1 id="writer"></h1>
-    <div class="bottm_buton_set">
-      <button class="btn prev_btn">පෙර රූප රාමුව</button>
-      <button class="btn next_btn">මීළඟ රූප රාමුව</button>
-      <button class="btn credit_btn">ස්තූතිය</button>
+    <img class="frame-img" alt="">
     </div>
   </div>
+  <div class="col-sm-6 modal-story-panel">
+    <div class="modal-story-inner">
+    <img src="img/paper.png" class="paper" alt="">
+    <h1 id="writer"></h1>
+    </div>
+  </div>
+</div>
+<div class="bottm_buton_set">
+  <button type="button" class="btn prev_btn">පෙර රූප රාමුව</button>
+  <button type="button" class="btn next_btn">මීළඟ රූප රාමුව</button>
+  <button type="button" class="btn credit_btn">ස්තූතිය</button>
 </div>
 </div>
 <div class="page">
