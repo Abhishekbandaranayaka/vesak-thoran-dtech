@@ -16,8 +16,15 @@
         padding: 0px;
       }
       :root {
+        /* Thoran stage design size (matches bg.png layout at 1×) */
+        --ui-design-w: 1040;
+        --ui-design-h: 700;
+        --ui-scale-fit: min(
+          (100vw - 20px) / var(--ui-design-w),
+          (100vh - 20px) / var(--ui-design-h)
+        );
         /* Standard laptop (typical 1366–1920px width) */
-        --ui-scale: 0.88;
+        --ui-scale: min(0.88, var(--ui-scale-fit));
         --story-panel-width: min(480px, 42vw);
         --story-text-size: clamp(13px, 1.25vw, 20px);
         --story-btn-size: clamp(11px, 0.95vw, 14px);
@@ -26,7 +33,7 @@
       /* Wide laptop / small desktop */
       @media only screen and (min-width: 1600px) and (max-width: 1919px) {
         :root {
-          --ui-scale: 1;
+          --ui-scale: min(1, var(--ui-scale-fit));
           --story-panel-width: min(520px, 40vw);
           --story-text-size: clamp(14px, 1.2vw, 22px);
           --story-btn-size: clamp(12px, 0.9vw, 15px);
@@ -36,7 +43,7 @@
       /* Large desktop / wide monitors */
       @media only screen and (min-width: 1920px) {
         :root {
-          --ui-scale: 1.18;
+          --ui-scale: min(1.18, var(--ui-scale-fit));
           --story-panel-width: min(660px, 38vw);
           --story-text-size: clamp(17px, 1.15vw, 28px);
           --story-btn-size: clamp(14px, 0.9vw, 19px);
@@ -46,7 +53,7 @@
       /* Very large / 4K displays */
       @media only screen and (min-width: 2560px) {
         :root {
-          --ui-scale: 1.32;
+          --ui-scale: min(1.32, var(--ui-scale-fit));
           --story-panel-width: min(760px, 34vw);
           --story-text-size: clamp(19px, 1.05vw, 32px);
           --story-btn-size: clamp(15px, 0.8vw, 22px);
@@ -150,22 +157,11 @@
       .bg {
         position: fixed;
         z-index: -1;
-        top: calc(50vh - 340px);
-        left: calc(50vw - 524px);
         width: 1040px;
-        transform: rotate(0deg);
-      }
-
-      @media only screen and (max-width: 768px) {
-        .bg {
-          top: calc(50vh - 500px);
-        }
-      }
-
-      @media only screen and (max-width: 480px) {
-        .bg {
-          top: calc(50vh - 560px);
-        }
+        height: auto;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
 
       .circle-0-1 .led:nth-child(0) {
@@ -1383,6 +1379,19 @@
         transform: scale(var(--ui-scale));
         transform-origin: center center;
         pointer-events: none;
+        overflow: hidden;
+      }
+
+      @media only screen and (max-width: 768px) {
+        .content {
+          transform: scale(var(--ui-scale)) translateY(-5%);
+        }
+      }
+
+      @media only screen and (max-width: 480px) {
+        .content {
+          transform: scale(var(--ui-scale)) translateY(-7%);
+        }
       }
 
       .content > * {
